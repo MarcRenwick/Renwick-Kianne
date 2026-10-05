@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Renwick &amp; Kianne Cher-Rylle</title>
+  <meta name="description" content="Every place we go, every moment we keep. Our favorite memories, from simple days to trips we'll never forget.">
+  <meta name="theme-color" content="#6e1f33">
+
+  <!-- How the link looks when shared on Messenger, Facebook, etc. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Renwick &amp; Kianne Cher-Rylle">
+  <meta property="og:description" content="Every place we go, every moment we keep.">
+
+  <!-- Browser-tab icon (an emoji, so no image file is needed) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+
+  <!-- Google Fonts: Playfair Display (names + headings), Cormorant Garamond (body text), Caveat (handwriting) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Tells style.css that JavaScript is on, so the envelope intro can show.
+       (If JavaScript is off, people still see the page, just without the intro.) -->
+  <script>document.documentElement.classList.add("js", "intro-active");</script>
+
+  <!-- photos.js MUST load before script.js, because script.js reads the PHOTOS list -->
+  <script src="photos.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ============ 1. OPENING: a sealed envelope ============ -->
+  <div class="intro" id="intro">
+    <button class="envelope" id="envelope" type="button" aria-label="Open the envelope">
+      <span class="envelope__back"></span>
+      <span class="envelope__letter">
+        <span class="letter__small">a little book of us</span>
+        <span class="letter__big">R <em>&amp;</em> K</span>
+        <span class="letter__small">since 2018</span>
+      </span>
+      <span class="envelope__pocket"></span>
+      <span class="envelope__flap"></span>
+      <span class="envelope__seal"><span>R&amp;K</span></span>
+    </button>
+    <p class="intro__hint">tap the envelope to open</p>
+  </div>
+
+  <!-- The photos that fly out of the envelope get added here by script.js -->
+  <div class="burst" id="burst" aria-hidden="true"></div>
+
+  <!-- ============ 2. HERO: our names + floating polaroids ============ -->
+  <header class="hero" id="top">
+    <!-- Floating polaroids are added here by script.js -->
+    <div class="hero__photos" id="hero-photos" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow">a travel journal by</p>
+      <h1 class="hero__title" aria-label="Renwick &amp; Kianne Cher-Rylle">
+        <span class="hero__name" data-split>Renwick</span>
+        <span class="hero__amp" aria-hidden="true">&amp;</span>
+        <span class="hero__name hero__name--two" data-split>Kianne Cher-Rylle</span>
+      </h1>
+      <p class="hero__tagline">Every place we go, every moment we keep.</p>
+      <p class="hero__desc">Our favorite memories, from simple days to trips we'll never forget.</p>
+    </div>
+
+    <a class="scroll-cue" href="#story"><span>scroll</span><i aria-hidden="true"></i></a>
+  </header>
+
+  <main>
+    <noscript><p class="noscript">Please turn on JavaScript to see our photos.</p></noscript>
+
+    <!-- ============ 3. OUR STORY + days-together counter ============ -->
+    <section class="section page story" id="story" aria-labelledby="story-title">
+      <div class="section__head">
+        <p class="eyebrow">chapter one</p>
+        <h2 class="section__title" id="story-title">Our Story</h2>
+      </div>
+
+      <div class="story__grid">
+        <!-- The first "Memories" photo is placed here by script.js -->
+        <div class="story__photo" id="story-photo"></div>
+
+        <div class="story__text">
+          <p class="story__lead">We met at <strong>Mangatarem Catholic School</strong> in 2021, and our story began.</p>
+          <p>Since then, we've collected memories, trips, and little moments together. This is where we keep them.</p>
+
+
+          <!-- Live counter (the start date is set at the top of script.js) -->
+          <div class="counter" id="counter">
+            <span class="stamp counter__stamp" aria-hidden="true">♥</span>
+            <p class="counter__label">together for</p>
+            <p class="counter__days"><span id="days-count">0</span> <small>days</small></p>
+            <p class="counter__clock" aria-hidden="true">
+              <span id="clock-h">00</span>h
+              <span id="clock-m">00</span>m
+              <span id="clock-s">00</span>s
+            </p>
+            <p class="counter__since" id="since-text"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. TIMELINE: key moments in order ============ -->
+    <section class="section page timeline" id="timeline" aria-labelledby="timeline-title">
+      <div class="section__head">
+        <p class="eyebrow">chapter two</p>
+        <h2 class="section__title" id="timeline-title">Our Timeline</h2>
+        <p class="section__sub">The moments that made us, in order.</p>
+      </div>
+
+      <div class="timeline__track" id="timeline-track">
+        <!-- This line "draws itself" as you scroll -->
+        <div class="timeline__line" aria-hidden="true"><span class="timeline__fill" id="timeline-fill"></span></div>
+        <!-- Timeline entries are added here by script.js -->
+        <ol class="timeline__list" id="timeline-list"></ol>
+      </div>
+    </section>
+
+    <!-- ============ 5. TRAVELS: the illustrated route ============ -->
+    <section class="section page travels" id="travels" aria-labelledby="travels-title">
+      <!-- "sticky" keeps the map on screen while you scroll and the route draws -->
+      <div class="travels__sticky">
+        <div class="section__head">
+          <p class="eyebrow">chapter three</p>
+          <h2 class="section__title" id="travels-title">Our Travels</h2>
+          <p class="section__sub">Every stop, every stamp. Hover or tap a stop to see its photos.</p>
+        </div>
+
+        <div class="route" id="route">
+          <!-- The SVG route, the stop buttons and the photo card are all built by script.js -->
+          <svg class="route__svg" id="route-svg" aria-hidden="true"></svg>
+          <div class="route__stops" id="route-stops"></div>
+          <div class="route-card" id="route-card" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. GALLERY: masonry grid + filters ============ -->
+    <section class="section page gallery" id="gallery" aria-labelledby="gallery-title">
+      <div class="section__head">
+        <p class="eyebrow">chapter four</p>
+        <h2 class="section__title" id="gallery-title">The Gallery</h2>
+        <p class="section__sub">All of it, in one place. Click a photo to see it up close.</p>
+      </div>
+
+      <div class="filters" id="filters" role="group" aria-label="Filter photos">
+        <button class="filter is-active" type="button" data-filter="All" aria-pressed="true">All</button>
+        <button class="filter" type="button" data-filter="Memories" aria-pressed="false">Memories</button>
+        <button class="filter" type="button" data-filter="Travels" aria-pressed="false">Travels</button>
+        <button class="filter" type="button" data-filter="Foods" aria-pressed="false">Foods</button>
+        <button class="filter" type="button" data-filter="Everyday" aria-pressed="false">Everyday</button>
+      </div>
+
+      <!-- Photo cards are added here by script.js -->
+      <div class="masonry" id="masonry"></div>
+      <p class="gallery__empty" id="gallery-empty" hidden>No photos here yet.</p>
+    </section>
+
+    <!-- ============ 7. FILM STRIP ============ -->
+    <section class="section page film" id="film" aria-label="Film strip">
+      <div class="section__head">
+        <p class="eyebrow">chapter five</p>
+        <h2 class="section__title">Frame by Frame</h2>
+      </div>
+      <!-- Two strips that slide sideways (in opposite directions) as you scroll -->
+      <div class="film__strip"><div class="film__track" id="film-track-1"></div></div>
+      <div class="film__strip film__strip--two"><div class="film__track" id="film-track-2"></div></div>
+    </section>
+
+    <!-- ============ 8. CLOSING ============ -->
+    <section class="section page closing" id="closing" aria-labelledby="closing-title">
+      <p class="eyebrow">the last page (for now)</p>
+      <h2 class="closing__title" id="closing-title" data-split-words>And we're just getting started.</h2>
+      <!-- The newest photo is placed here by script.js -->
+      <div class="closing__photo" id="closing-photo"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__names">Renwick &amp; Kianne Cher-Rylle</p>
+    <p class="footer__small">Every place we go, every moment we keep. · <a href="#top">back to the beginning ↑</a></p>
+  </footer>
+
+  <!-- ============ LIGHTBOX (fullscreen photo viewer) ============ -->
+  <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+    <button class="lightbox__btn lightbox__close" type="button" data-action="close" aria-label="Close">✕</button>
+    <button class="lightbox__btn lightbox__prev" type="button" data-action="prev" aria-label="Previous photo">‹</button>
+    <button class="lightbox__btn lightbox__next" type="button" data-action="next" aria-label="Next photo">›</button>
+
+    <figure class="lightbox__frame" id="lightbox-frame">
+      <div class="lightbox__photo">
+        <img id="lightbox-img" alt="">
+        <span class="postmark" id="lightbox-postmark" hidden></span>
+      </div>
+      <figcaption class="lightbox__caption">
+        <span id="lightbox-caption"></span>
+        <small id="lightbox-meta"></small>
+      </figcaption>
+    </figure>
+
+    <p class="lightbox__count" id="lightbox-count"></p>
+  </dialog>
+
+  <!-- Little hearts that follow the mouse are added here -->
+  <div class="hearts" id="hearts" aria-hidden="true"></div>
+</body>
+</html>

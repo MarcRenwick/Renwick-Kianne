@@ -1,0 +1,1686 @@
+/* =========================================================
+   style.css: how everything looks
+   Sections in this file:
+   1. Colors, fonts & basics     6. Timeline
+   2. Shared pieces (polaroid,   7. Travels route
+      tape, postmark, stamp)     8. Gallery + filters
+   3. Page-flip section reveal   9. Film strip
+   4. Opening envelope          10. Closing + footer
+   5. Hero + Our Story          11. Lightbox + hearts
+                                12. Phones + reduced motion
+   ========================================================= */
+
+
+/* ---------- 1. COLORS, FONTS & BASICS ---------- */
+
+/* Change these to restyle the whole site at once */
+:root {
+  --paper: #fbf6ef;        /* soft off-white page */
+  --desk: #f0e4d7;         /* slightly darker "desk" behind the pages */
+  --card: #fffdf9;         /* polaroid white */
+  --rose: #d4a5a5;         /* dusty rose */
+  --rose-soft: #ecd5d0;
+  --blush: #f3e4e1;        /* very light blush (bottom of the Timeline page) */
+  --wine: #6e1f33;         /* deep wine red */
+  --wine-deep: #4a1022;
+  --gold: #e0a458;         /* warm sunset gold */
+  --gold-deep: #c4862f;
+  --ink: #3a2a2d;          /* main text color */
+  --ink-soft: #7d6468;
+
+  --font-display: "Playfair Display", Georgia, serif;  /* names + headings */
+  --font-body: "Cormorant Garamond", Georgia, serif;   /* normal text */
+  --font-hand: "Caveat", "Segoe Print", cursive;       /* handwritten captions */
+  --font-mono: "Courier New", Courier, monospace;      /* stamps */
+
+  --shadow: 0 1px 2px rgba(58, 20, 30, .08), 0 16px 32px -14px rgba(58, 20, 30, .38);
+  --bounce: cubic-bezier(.34, 1.56, .64, 1);  /* "overshoot" easing for pop-ins */
+  --smooth: cubic-bezier(.16, .84, .3, 1);
+
+  /* Paper grain texture (a tiny SVG noise pattern) */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* Old photo-album paper, laid over every cream page: fine grain, faint fibers and a
+     soft uneven tone (two small SVG tiles that repeat without visible seams) */
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='g' x='0' y='0' width='1' height='1'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .29 0 0 0 0 .2 0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M302.7 141.1q-5.2 5.8 -1.7 12.9' stroke='%23fff' stroke-opacity='0.27' stroke-width='0.76'/%3E%3Cpath d='M333.5 123.8q-4.7 6.6 -4.7 14.6' stroke='%23735038' stroke-opacity='0.06' stroke-width='0.66'/%3E%3Cpath d='M322.4 294.2q-2.7 7.5 -10.5 9.1' stroke='%23735038' stroke-opacity='0.12' stroke-width='0.79'/%3E%3Cpath d='M138.7 63.5q-9.6 -1.9 -17.1 4.5' stroke='%23fff' stroke-opacity='0.23' stroke-width='0.91'/%3E%3Cpath d='M80.4 259.3q-3.7 4 -7.6 7.8' stroke='%23735038' stroke-opacity='0.11' stroke-width='0.77'/%3E%3Cpath d='M240.9 148.3q4 5.5 10.7 4.4' stroke='%23735038' stroke-opacity='0.07' stroke-width='0.52'/%3E%3Cpath d='M148.3 202.2q8 1 10.5 8.6' stroke='%23fff' stroke-opacity='0.31' stroke-width='0.75'/%3E%3Cpath d='M171.9 235.7q-3.9 7.2 -9 13.7' stroke='%23735038' stroke-opacity='0.12' stroke-width='0.56'/%3E%3Cpath d='M137.3 155.4q-3 -0.1 -5.1 2' stroke='%23735038' stroke-opacity='0.13' stroke-width='0.70'/%3E%3Cpath d='M54.3 186.4q7.2 4.8 12.6 11.5' stroke='%23fff' stroke-opacity='0.29' stroke-width='0.67'/%3E%3Cpath d='M60.5 310.6q2.6 10.6 -5.9 17.4' stroke='%23735038' stroke-opacity='0.06' stroke-width='0.52'/%3E%3Cpath d='M276.4 279.4q1.8 2.8 5.1 2.6' stroke='%23735038' stroke-opacity='0.12' stroke-width='0.86'/%3E%3Cpath d='M258.2 45.1q-5.2 2.1 -10.2 4.5' stroke='%23fff' stroke-opacity='0.27' stroke-width='0.52'/%3E%3Cpath d='M217.5 42.6q5.5 7.9 15.2 7.6' stroke='%23735038' stroke-opacity='0.12' stroke-width='0.94'/%3E%3Cpath d='M210.1 148.8q3.7 7.4 11.9 7' stroke='%23735038' stroke-opacity='0.09' stroke-width='0.87'/%3E%3Cpath d='M239.6 177.2q4.1 1.5 8.2 2.8' stroke='%23fff' stroke-opacity='0.24' stroke-width='0.96'/%3E%3Cpath d='M54.9 259.5q-6.6 4.2 -14.3 5.7' stroke='%23735038' stroke-opacity='0.11' stroke-width='0.56'/%3E%3Cpath d='M334.4 202.1q-5.9 1.6 -7.3 7.5' stroke='%23735038' stroke-opacity='0.10' stroke-width='0.66'/%3E%3Cpath d='M201.6 172.7q0.5 4.6 2 9.1' stroke='%23fff' stroke-opacity='0.31' stroke-width='0.76'/%3E%3Cpath d='M81.3 210.8q-7.1 -0.7 -13.1 3.1' stroke='%23735038' stroke-opacity='0.11' stroke-width='0.58'/%3E%3Cpath d='M215.6 233.8q-3.2 -0.3 -4.7 2.6' stroke='%23735038' stroke-opacity='0.10' stroke-width='0.58'/%3E%3Cpath d='M89.7 234.2q7.4 4.4 10.9 12.2' stroke='%23fff' stroke-opacity='0.25' stroke-width='0.89'/%3E%3Cpath d='M29.6 261.7q0.1 10.5 8.7 16.5' stroke='%23735038' stroke-opacity='0.11' stroke-width='0.63'/%3E%3Cpath d='M339.6 342.9q6 7.1 3.3 15.9' stroke='%23735038' stroke-opacity='0.09' stroke-width='0.66'/%3E%3Cpath d='M103.9 340q-8.2 1.4 -15.8 5' stroke='%23fff' stroke-opacity='0.21' stroke-width='0.60'/%3E%3Cpath d='M83.6 236.8q-2.1 5.9 2.6 10.1' stroke='%23735038' stroke-opacity='0.07' stroke-width='0.63'/%3E%3Cpath d='M122.7 49.6q0.2 5.8 2.3 11.2' stroke='%23735038' stroke-opacity='0.06' stroke-width='0.52'/%3E%3Cpath d='M206.3 336.3q-6.3 7.6 -1.9 16.4' stroke='%23fff' stroke-opacity='0.22' stroke-width='0.97'/%3E%3Cpath d='M147.8 82.2q-8.7 -3.4 -17.1 0.6' stroke='%23735038' stroke-opacity='0.07' stroke-width='0.98'/%3E%3Cpath d='M128.1 317.4q-3.2 3.1 -7.6 2.4' stroke='%23735038' stroke-opacity='0.11' stroke-width='0.80'/%3E%3Cpath d='M344 130.7q-4.7 4.2 -5 10.5' stroke='%23fff' stroke-opacity='0.31' stroke-width='0.63'/%3E%3Cpath d='M225.9 291q-2.1 2.1 -4.9 3.2' stroke='%23735038' stroke-opacity='0.12' stroke-width='0.96'/%3E%3Cpath d='M276.7 205.2q-8.7 1.3 -10.7 9.8' stroke='%23735038' stroke-opacity='0.12' stroke-width='0.59'/%3E%3Cpath d='M269 157.9q-3.3 6.5 -8.8 11.3' stroke='%23fff' stroke-opacity='0.25' stroke-width='1.00'/%3E%3Cpath d='M203.7 274.8q-4.8 3.3 -10.6 4.3' stroke='%23735038' stroke-opacity='0.13' stroke-width='0.67'/%3E%3Cpath d='M93.9 39.7q-0.7 7.4 1.1 14.5' stroke='%23735038' stroke-opacity='0.07' stroke-width='0.56'/%3E%3Cpath d='M26.1 75.7q0 6.4 -5.1 10.3' stroke='%23fff' stroke-opacity='0.23' stroke-width='0.77'/%3E%3Cpath d='M255.7 132.6q-6.7 6.4 -11.7 14.2' stroke='%23735038' stroke-opacity='0.12' stroke-width='0.99'/%3E%3Cpath d='M301 166.5q2.2 9.6 -1.8 18.5' stroke='%23735038' stroke-opacity='0.08' stroke-width='0.78'/%3E%3Cpath d='M96.5 239.1q-0.1 5.2 4.4 7.8' stroke='%23fff' stroke-opacity='0.28' stroke-width='0.71'/%3E%3Cpath d='M33.7 46q-2.6 3.2 -5.1 6.4' stroke='%23735038' stroke-opacity='0.12' stroke-width='0.70'/%3E%3Cpath d='M231.3 217.5q-0.7 8.7 6.4 13.8' stroke='%23735038' stroke-opacity='0.09' stroke-width='0.84'/%3E%3Cpath d='M112.6 298q7 7.1 7 17.1' stroke='%23fff' stroke-opacity='0.25' stroke-width='0.69'/%3E%3Cpath d='M211.4 107.5q-5.5 1.4 -7.2 6.9' stroke='%23735038' stroke-opacity='0.09' stroke-width='0.87'/%3E%3Cpath d='M87.4 324.6q-4 7.5 -7.1 15.4' stroke='%23735038' stroke-opacity='0.07' stroke-width='0.62'/%3E%3Cpath d='M192.9 318q2 7.1 2.8 14.5' stroke='%23fff' stroke-opacity='0.21' stroke-width='1.00'/%3E%3C/g%3E%3C/svg%3E");
+  --paper-tone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='d' x='0' y='0' width='1' height='1'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.005' numOctaves='3' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .25 .14 0 0 0 -.066'/%3E%3C/filter%3E%3Cfilter id='l' x='0' y='0' width='1' height='1'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.007' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .3 0 0 0 -.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23l)'/%3E%3C/svg%3E");
+  --paper-texture: var(--paper-grain), var(--paper-tone);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper-texture), var(--desk);
+  overflow-x: hidden;  /* stops sideways scrolling from animations */
+}
+
+/* Soft warm vignette: the edges of the screen fall into a little shadow,
+   like lamplight on a scrapbook page. It never blocks clicks. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 80;  /* above the pages, below the heart trail and the envelope */
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, transparent 58%, rgba(120, 72, 36, .07) 80%, rgba(96, 52, 24, .16) 100%);
+}
+
+/* No scrolling while the envelope is still closed */
+.intro-active body,
+.lightbox-open body { overflow: hidden; }
+
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+a { color: var(--wine); }
+::selection { background: var(--rose); color: var(--wine-deep); }
+:focus-visible { outline: 3px dashed var(--gold); outline-offset: 4px; }
+
+.noscript { text-align: center; padding: 2rem; font-size: 1.4rem; }
+
+
+/* ---------- 2. SHARED PIECES ---------- */
+
+/* Polaroid frame: white border, thicker at the bottom for the caption */
+.polaroid {
+  position: relative;
+  margin: 0;
+  padding: .7rem .7rem 0;
+  background: var(--card);
+  border-radius: 3px;
+  box-shadow: var(--shadow);
+  transform: rotate(var(--rot, 0deg));  /* --rot is a small random tilt set by script.js */
+  transition: transform .6s var(--smooth), box-shadow .4s;
+}
+
+.polaroid__caption {
+  font-family: var(--font-hand);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--ink);
+  padding: .6rem .3rem .85rem;
+}
+
+.polaroid__date {
+  display: block;
+  margin-top: .2rem;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+/* The photo area. Before an image loads it keeps a 4:5 shape so the layout doesn't jump. */
+.photo {
+  position: relative;
+  overflow: hidden;
+  background: #efe8df;
+}
+.photo:not(.is-loaded) { aspect-ratio: 4 / 5; }
+.photo img { width: 100%; height: auto; }
+
+/* "Developing" effect: a white layer fades away and the colors come in, like a real polaroid */
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #fdfbf7;
+  pointer-events: none;
+  transition: opacity 2.4s ease .1s;
+}
+.photo img {
+  filter: grayscale(1) sepia(.45) brightness(1.3) contrast(.65);
+  transition: filter 3.2s ease;
+}
+.photo.is-developed::after { opacity: 0; }
+.photo.is-developed img { filter: none; }
+
+/* If a photo path is wrong, show which file is missing (handy while editing photos.js) */
+.photo.is-broken::before {
+  content: "Photo not found:\A" attr(data-src);
+  white-space: pre-wrap;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  font: 700 .8rem/1.4 var(--font-mono);
+  color: var(--wine);
+  text-align: center;
+  word-break: break-all;
+}
+.photo.is-broken img { opacity: 0; }
+
+/* Washi tape: a see-through striped strip with torn ends */
+.tape {
+  position: absolute;
+  z-index: 3;
+  width: 5.5rem;
+  height: 1.6rem;
+  background-color: var(--tape, rgba(212, 165, 165, .8));
+  background-image: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .3) 0 5px, transparent 5px 10px);
+  clip-path: polygon(3% 0, 97% 0, 100% 22%, 96% 45%, 100% 70%, 97% 100%, 3% 100%, 0 75%, 4% 50%, 0 25%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.tape--rose  { --tape: rgba(212, 165, 165, .82); }
+.tape--gold  { --tape: rgba(224, 164, 88, .7); }
+.tape--wine  { --tape: rgba(110, 31, 51, .45); }
+.tape--cream { --tape: rgba(232, 214, 186, .9); }
+
+.tape--tl  { top: -.6rem; left: -1.5rem; transform: rotate(-38deg); }
+.tape--tr  { top: -.6rem; right: -1.5rem; transform: rotate(38deg); }
+.tape--top { top: -.85rem; left: 50%; transform: translateX(-50%) rotate(-3deg); }
+
+/* Postmark: the round ink stamp on travel photos */
+.postmark {
+  position: absolute;
+  z-index: 2;
+  top: .6rem;
+  right: .6rem;
+  width: 4.7rem;
+  height: 4.7rem;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  box-shadow: inset 0 0 0 3px transparent, inset 0 0 0 4px currentColor;  /* inner ring */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .15rem;
+  text-align: center;
+  font: 700 .55rem/1.2 var(--font-mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(110, 31, 51, .8);
+  transform: rotate(-14deg);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.postmark b { max-width: 80%; font-weight: 700; overflow: hidden; }
+.postmark i { font-style: normal; font-size: .5rem; opacity: .85; }
+
+/* Wavy "cancellation" lines next to the postmark */
+.postmark::after {
+  content: "";
+  position: absolute;
+  right: 92%;
+  top: 50%;
+  width: 3.4rem;
+  height: 1.6rem;
+  transform: translateY(-50%);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' fill='none' stroke='%236e1f33' stroke-width='2.2'%3E%3Cpath d='M0 5q7.5-5 15 0t15 0 15 0 15 0M0 15q7.5-5 15 0t15 0 15 0 15 0M0 25q7.5-5 15 0t15 0 15 0 15 0'/%3E%3C/svg%3E") center / contain no-repeat;
+  opacity: .75;
+}
+
+/* Postage stamp with perforated (bumpy) edges */
+.stamp {
+  --r: 4px;  /* size of the perforation holes */
+  display: inline-grid;
+  place-items: center;
+  padding: calc(var(--r) * 2.4);
+  background: var(--gold);
+  color: var(--wine-deep);
+  -webkit-mask:
+    radial-gradient(var(--r), #0000 97%, #000) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)),
+    linear-gradient(#000 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));
+  mask:
+    radial-gradient(var(--r), #0000 97%, #000) round calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r)) calc(3 * var(--r)),
+    linear-gradient(#000 0 0) no-repeat 50% / calc(100% - 3 * var(--r)) calc(100% - 3 * var(--r));
+}
+
+/* Section headings */
+.section {
+  padding: clamp(5rem, 11vw, 8.5rem) clamp(1rem, 5vw, 4rem);
+  overflow-x: clip;  /* tilted photos can't poke out sideways (stops phones from scrolling sideways) */
+}
+
+.section__head {
+  max-width: 46rem;
+  margin: 0 auto clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  line-height: 1.2;
+  color: var(--gold-deep);
+  transform: rotate(-2deg);
+}
+
+.section__title {
+  margin: .15rem 0 1rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.7rem, 7.5vw, 5.4rem);
+  line-height: 1;
+  letter-spacing: -.01em;
+  color: var(--wine);
+}
+
+.section__sub {
+  margin: 0;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+
+/* ---------- 3. PAGE-FLIP SECTION REVEAL ---------- */
+/* Each section starts turned away like a page, then swings flat when you scroll to it.
+   script.js adds the "is-visible" class at the right moment. */
+
+.page {
+  position: relative;
+  isolation: isolate;  /* keeps each page's background pictures behind its content */
+  background: var(--paper-texture), var(--paper);
+}
+
+.js .page {
+  opacity: 0;
+  transform: perspective(2200px) rotateY(22deg);
+  transform-origin: left 30%;
+  transition: opacity .9s ease, transform 1.4s var(--smooth);
+}
+.js .page:nth-of-type(even) {
+  transform: perspective(2200px) rotateY(-22deg);
+  transform-origin: right 30%;
+}
+.js .page.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* ---------- 4. OPENING ENVELOPE ---------- */
+
+.intro { display: none; }  /* hidden when JavaScript is off */
+
+.js .intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 2.2rem;
+  padding: 1rem;
+  overflow: hidden;
+  background:
+    var(--grain),
+    radial-gradient(ellipse at 50% 42%, #93334e 0%, var(--wine) 45%, var(--wine-deep) 100%);
+  transition: opacity .9s ease, visibility .9s;
+}
+
+/* Faint postmark rings in the background, like a used envelope */
+.intro::before,
+.intro::after {
+  content: "";
+  position: absolute;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  border: 3px solid rgba(224, 164, 88, .14);
+  box-shadow: inset 0 0 0 10px transparent, inset 0 0 0 12px rgba(224, 164, 88, .1);
+  pointer-events: none;
+}
+.intro::before { top: -5rem; left: -5rem; }
+.intro::after  { bottom: -6rem; right: -4rem; width: 22rem; height: 22rem; }
+
+.envelope {
+  position: relative;
+  width: min(82vw, 470px);
+  aspect-ratio: 8 / 5;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 1200px;  /* gives the flap a 3D look when it opens */
+  animation: envelope-float 4s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes envelope-float {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50%      { transform: translateY(-14px) rotate(1deg); }
+}
+
+.envelope > span { position: absolute; display: block; }
+
+/* Inside of the envelope */
+.envelope__back {
+  inset: 0;
+  border-radius: 6px;
+  background: #dcbcab;
+  box-shadow: 0 40px 70px -20px rgba(0, 0, 0, .55);
+}
+
+/* The letter that slides out */
+.envelope > .envelope__letter {
+  left: 5%;
+  right: 5%;
+  top: 6%;
+  bottom: 6%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .2rem;
+  border-radius: 3px;
+  background: var(--paper) var(--grain);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  transition: transform .9s var(--bounce) .7s;
+}
+.letter__small {
+  font-family: var(--font-hand);
+  font-size: clamp(1rem, 3.6vw, 1.35rem);
+  color: var(--ink-soft);
+}
+.letter__big {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 9vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--wine);
+}
+.letter__big em { font-style: italic; font-weight: 400; color: var(--gold-deep); }
+
+/* Front pocket: a rectangle with a V cut out of the top, plus two fold lines */
+.envelope__pocket {
+  inset: 0;
+  z-index: 3;
+  border-radius: 6px;
+  background:
+    linear-gradient(to bottom right, transparent 49.5%, rgba(110, 31, 51, .14) 50%, transparent 50.5%) left bottom / 50% 46% no-repeat,
+    linear-gradient(to bottom left, transparent 49.5%, rgba(110, 31, 51, .14) 50%, transparent 50.5%) right bottom / 50% 46% no-repeat,
+    linear-gradient(#f3e2d6, #ead3c4);
+  clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Top flap (a triangle) that flips open */
+.envelope__flap {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 58%;
+  z-index: 4;
+  background: linear-gradient(#f7e9de, #e6cdbd);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform .75s cubic-bezier(.5, 0, .25, 1) .25s, z-index 0s .6s;
+}
+
+/* Wax seal */
+.envelope > .envelope__seal {
+  left: 50%;
+  top: 58%;
+  z-index: 5;
+  width: 23%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  border-radius: 48% 52% 46% 54% / 52% 47% 53% 48%;  /* slightly uneven, like real wax */
+  background: radial-gradient(circle at 35% 30%, #a83c58, var(--wine) 55%, var(--wine-deep));
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .4), inset 0 0 0 5px rgba(0, 0, 0, .15), inset 0 0 0 8px rgba(255, 255, 255, .07);
+  color: var(--gold);
+  font: italic 700 clamp(1rem, 4.5vw, 1.6rem) var(--font-display);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .35);
+  transition: transform .3s var(--bounce);
+}
+.envelope__seal span { transform: rotate(-8deg); }
+.envelope:hover .envelope__seal,
+.envelope:focus-visible .envelope__seal { transform: translate(-50%, -50%) scale(1.1) rotate(-4deg); }
+
+.intro__hint {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  color: var(--rose-soft);
+  animation: hint-pulse 2.2s ease-in-out infinite;
+}
+@keyframes hint-pulse {
+  0%, 100% { opacity: .55; transform: translateY(0); }
+  50%      { opacity: 1;   transform: translateY(-4px); }
+}
+
+/* --- Opening steps (script.js adds these classes one after another) --- */
+.intro.is-opening .envelope { animation-play-state: paused; cursor: default; }
+.intro.is-opening .intro__hint { animation: none; opacity: 0; transition: opacity .3s; }
+.intro.is-opening .envelope__seal { animation: seal-break .55s ease-in forwards; }
+.intro.is-opening .envelope__flap { transform: rotateX(180deg); z-index: 1; }
+.intro.is-opening .envelope__letter { transform: translateY(-58%); }
+
+@keyframes seal-break {
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  30%  { transform: translate(-50%, -50%) scale(1.2) rotate(-6deg); }
+  100% { transform: translate(-50%, 70%) scale(.4) rotate(40deg); opacity: 0; }
+}
+
+.intro.is-leaving { opacity: 0; visibility: hidden; pointer-events: none; }
+.intro.is-leaving .envelope {
+  animation: none;
+  transform: translateY(45vh) rotate(10deg) scale(.8);
+  transition: transform .9s cubic-bezier(.5, 0, .75, 0);
+}
+
+/* Photos + hearts that burst out of the envelope */
+.burst {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  pointer-events: none;
+  perspective: 1400px;
+}
+.burst__card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(110px, 15vw, 190px);
+  padding: 7px 7px 24px;
+  background: var(--card);
+  border-radius: 2px;
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .5);
+}
+.burst__card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.burst__heart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+
+/* ---------- 5. HERO + OUR STORY ---------- */
+
+.hero {
+  position: relative;
+  isolation: isolate;  /* keeps the background photo behind everything in the hero */
+  min-height: 100vh;
+  min-height: 100svh;  /* better height on phones (ignores the address bar) */
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 6rem 1rem 8rem;
+  text-align: center;
+  background: var(--paper);  /* shows while the photo loads */
+}
+
+/* Background: one of our photos, heavily blurred like a soft, dreamy memory */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -40px;  /* bigger than the hero, so the blurry edges stay out of sight */
+  z-index: -1;
+  background: url("images/backgrounds/hero.webp") 50% 40% / cover no-repeat;
+  filter: blur(12px) sepia(.3) brightness(1.05);  /* warmed up to match the cream and gold */
+}
+
+/* On top of the photo: paper texture, a golden light leak in the top-right corner
+   (like sunlight on film), a fade into plain paper at the bottom (so the hero flows
+   into Our Story) and a cream veil over everything */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    var(--paper-texture),
+    radial-gradient(ellipse 30% 42% at 100% 0%, rgba(255, 236, 196, .8), transparent 70%),
+    radial-gradient(ellipse 62% 80% at 100% 0%, rgba(250, 184, 98, .55), rgba(236, 140, 72, .2) 48%, transparent 74%),
+    linear-gradient(transparent 58%, rgba(251, 246, 239, .55) 80%, var(--paper)),
+    linear-gradient(rgba(247, 238, 232, .75), rgba(247, 238, 232, .75));
+}
+
+/* Floating polaroids around the names (script.js keeps them off the text) */
+.hero__photos { position: absolute; inset: 0; }
+
+.hero-photo {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w, 180px);
+  animation: bob var(--dur, 7s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+/* No place/date stamp on the photos at the top of the page */
+.hero .postmark { display: none; }
+
+.js .hero-photo { opacity: 0; transition: opacity .5s ease; }
+.js .hero-photo.is-shown { opacity: 1; }
+.hero-photo .polaroid { transition: none; }  /* script.js moves these every frame */
+.hero-photo .polaroid__caption { font-size: 1.1rem; padding: .4rem .2rem .6rem; }
+
+/* Every hero photo has the same 4:5 shape (very tall photos get trimmed), so
+   script.js knows each polaroid's size before the pictures load */
+.hero-photo .photo { aspect-ratio: 4 / 5; }
+.hero-photo .photo img { height: 100%; object-fit: cover; }
+
+@keyframes bob {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(var(--bx, 8px), var(--by, -18px)); }
+}
+
+.hero__content { position: relative; z-index: 2; max-width: 72rem; pointer-events: none; }
+
+.hero__eyebrow {
+  margin: 0 0 .6rem;
+  font-family: var(--font-hand);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--gold-deep);
+}
+
+.hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: .92;
+  letter-spacing: -.02em;
+  color: var(--wine);
+  text-shadow: 0 0 30px rgba(251, 246, 239, .95), 0 0 8px rgba(251, 246, 239, .8);  /* keeps names readable over photos */
+}
+.hero__name { display: block; font-size: clamp(3.4rem, 13vw, 11.5rem); }
+.hero__name--two { font-size: clamp(2.6rem, 8vw, 7.6rem); }
+.hero__amp {
+  display: block;
+  margin: .02em 0;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: .85;
+  color: var(--gold);
+}
+
+.hero__tagline {
+  margin: 1.8rem 0 .4rem;
+  font-family: var(--font-hand);
+  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+  line-height: 1.2;
+  color: var(--wine);
+}
+.hero__desc {
+  max-width: 38rem;
+  margin: 0 auto;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* A soft paper-colored glow keeps the small text readable on top of the photos */
+.hero__eyebrow,
+.hero__tagline,
+.hero__desc,
+.scroll-cue { text-shadow: 0 0 14px var(--paper), 0 0 6px var(--paper), 0 0 2px var(--paper); }
+
+/* Letters of the names are split into <span class="char"> by script.js so they can rise one by one */
+.word { display: inline-block; white-space: nowrap; }
+.char { display: inline-block; }
+
+.js .hero .char { opacity: 0; transform: translateY(.7em) rotate(10deg); }
+.js .hero__eyebrow,
+.js .hero__tagline,
+.js .hero__desc,
+.js .scroll-cue { opacity: 0; transform: translateY(24px); }
+.js .hero__amp { opacity: 0; transform: scale(0) rotate(-40deg); }
+
+.is-ready .hero .char {
+  opacity: 1;
+  transform: none;
+  transition: opacity .5s ease, transform 1s var(--bounce);
+  transition-delay: calc(var(--i) * 45ms + .1s);
+}
+.is-ready .hero__eyebrow,
+.is-ready .hero__tagline,
+.is-ready .hero__desc,
+.is-ready .scroll-cue {
+  opacity: 1;
+  transform: none;
+  transition: opacity .9s ease, transform 1.1s var(--smooth);
+}
+.is-ready .hero__amp { opacity: 1; transform: none; transition: opacity .4s, transform 1.1s var(--bounce) .45s; }
+.is-ready .hero__tagline { transition-delay: 1s; }
+.is-ready .hero__desc { transition-delay: 1.2s; }
+.is-ready .scroll-cue { transition-delay: 1.7s; }
+
+.scroll-cue {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  width: max-content;
+  margin: auto;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.scroll-cue i {
+  width: 2px;
+  height: 46px;
+  background: linear-gradient(var(--wine), transparent);
+  transform-origin: top;
+  animation: cue 2s ease-in-out infinite;
+}
+@keyframes cue {
+  0%   { transform: scaleY(0); opacity: 1; }
+  60%  { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+/* Our Story */
+
+/* A faded, blurred photo of us on the right side, melting into the paper */
+.story::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -24px;  /* past the edge, so the blur has no soft border there (the page clips it) */
+  width: 62%;
+  z-index: -1;
+  background: url("images/backgrounds/story.webp") 50% 25% / cover no-repeat;
+  filter: blur(4px) sepia(.3) saturate(.85);
+  opacity: .2;
+  -webkit-mask: radial-gradient(farthest-side at 100% 50%, #000 35%, transparent);
+  mask: radial-gradient(farthest-side at 100% 50%, #000 35%, transparent);
+}
+
+.story__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
+  max-width: 68rem;
+  margin: 0 auto;
+}
+.story__photo { width: 100%; max-width: 25rem; justify-self: center; }
+
+.story__text > p {
+  margin: 0 0 1.2rem;
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  line-height: 1.55;
+}
+.story__text > .story__lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.25;
+  color: var(--wine);
+}
+.story__lead strong { font-style: italic; color: var(--gold-deep); }
+
+/* Days-together counter, styled like a little lined card */
+.counter {
+  position: relative;
+  max-width: 26rem;
+  margin-top: 2.2rem;
+  padding: 1.5rem 1.8rem 1.3rem;
+  background: var(--card) repeating-linear-gradient(transparent 0 31px, rgba(110, 31, 51, .07) 31px 32px);
+  border: 1px solid rgba(110, 31, 51, .12);
+  box-shadow: var(--shadow);
+  transform: rotate(1.2deg);
+}
+.counter__stamp {
+  position: absolute;
+  top: -1.2rem;
+  right: -1rem;
+  width: 3.4rem;
+  height: 4rem;
+  font-size: 1.5rem;
+  color: var(--wine);
+  transform: rotate(8deg);
+}
+.counter p { margin: 0; }
+.counter__label { font-family: var(--font-hand); font-size: 1.5rem; color: var(--ink-soft); }
+.counter .counter__days {
+  margin: .1rem 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(3.4rem, 8vw, 5.4rem);
+  line-height: 1;
+  color: var(--wine);
+  font-variant-numeric: tabular-nums;
+}
+.counter__days small { font-size: .35em; font-weight: 400; font-style: italic; color: var(--gold-deep); }
+.counter .counter__clock {
+  margin: .4rem 0 .7rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: .05em;
+}
+.counter__clock span {
+  display: inline-block;
+  min-width: 2.4ch;
+  padding: .1rem .3rem;
+  border-radius: 3px;
+  background: var(--rose-soft);
+  font-weight: 700;
+  text-align: center;
+  color: var(--wine);
+}
+.counter__since { font-family: var(--font-hand); font-size: 1.35rem; color: var(--ink-soft); }
+
+
+/* ---------- 6. TIMELINE ---------- */
+
+/* A lighter page: plain paper that warms from cream to blush, like turning to a new page */
+.timeline { background: var(--paper-texture), linear-gradient(var(--paper), var(--blush)); }
+
+.timeline__track {
+  position: relative;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+/* Faint dashed guide line in the middle */
+.timeline__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(rgba(110, 31, 51, .18) 0 8px, transparent 8px 16px);
+}
+
+/* The colored line that grows as you scroll. script.js sets --progress (0 to 1). */
+.timeline__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: linear-gradient(var(--gold), var(--rose) 40%, var(--wine));
+  transform: scaleY(var(--progress, 0));
+  transform-origin: top;
+}
+
+/* Glowing "pen tip" at the end of the line */
+.timeline__line::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(var(--progress, 0) * 100%);
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 6px rgba(224, 164, 88, .25), 0 0 24px var(--gold);
+}
+
+.timeline__list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each entry takes half the width: left side or right side */
+.tl-item {
+  position: relative;
+  width: 50%;
+  padding: 1.5rem 3.5rem 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+.tl-item--right {
+  margin-left: 50%;
+  padding: 1.5rem 0 1.5rem 3.5rem;
+  align-items: flex-start;
+  text-align: left;
+}
+.tl-item + .tl-item { margin-top: -7rem; }  /* lets left and right entries overlap a little */
+
+/* Dot on the line */
+.tl-item__dot {
+  position: absolute;
+  top: 4rem;
+  right: -12px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--rose);
+  transition: background .4s, border-color .4s, transform .6s var(--bounce), box-shadow .4s;
+}
+.tl-item--right .tl-item__dot { right: auto; left: -12px; }
+
+/* Dashed connector from the dot to the photo */
+.tl-item::before {
+  content: "";
+  position: absolute;
+  top: calc(4rem + 11px);
+  right: 0;
+  width: 3.2rem;
+  border-top: 2px dashed rgba(110, 31, 51, .3);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .5s ease .1s;
+}
+.tl-item--right::before { right: auto; left: 0; transform-origin: left; }
+
+.tl-card {
+  width: min(100%, 21rem);
+  opacity: 0;
+  transform: translateY(50px) scale(.8) rotate(var(--from-rot, -8deg));
+  transition: opacity .6s ease, transform 1s var(--bounce);
+}
+
+/* A year's photos as a small grid. script.js sets --cols (1 to 3). */
+.tl-photos {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), 1fr);
+  gap: .9rem;
+}
+.tl-photos .polaroid { padding: .4rem .4rem 1.1rem; cursor: zoom-in; }
+.tl-photos .polaroid:hover { z-index: 2; transform: rotate(0deg) scale(1.06); }
+.tl-photos .polaroid__caption,
+.tl-photos .postmark { display: none; }  /* the year's sentence is shown once, below */
+
+.tl-meta { margin-top: 1.1rem; line-height: 1.3; }
+.tl-text {
+  display: block;
+  margin-bottom: .3rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--wine);
+}
+.tl-date {
+  display: block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--wine);
+}
+.tl-place {
+  display: block;
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: var(--ink-soft);
+}
+/* Little map-pin shape drawn with CSS */
+.tl-place::before {
+  content: "";
+  display: inline-block;
+  width: .55em;
+  height: .55em;
+  margin-right: .4em;
+  border-radius: 50% 50% 50% 0;
+  background: var(--wine);
+  transform: rotate(-45deg);
+}
+.tag {
+  display: inline-block;
+  margin-top: .4rem;
+  padding: .15rem .6rem;
+  border-radius: 99px;
+  background: var(--rose-soft);
+  font: 700 .68rem/1.4 var(--font-mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+
+/* When the growing line reaches an entry, script.js adds "is-reached" and it pops in */
+.tl-item.is-reached .tl-card { opacity: 1; transform: none; }
+.tl-item.is-reached::before { transform: scaleX(1); }
+.tl-item.is-reached .tl-item__dot {
+  background: var(--wine);
+  border-color: var(--gold);
+  transform: scale(1.25);
+  box-shadow: 0 0 0 7px rgba(224, 164, 88, .22);
+}
+
+/* Year badges on the line */
+.tl-year {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0 1rem;
+}
+.tl-year span {
+  padding: .3rem 1.2rem;
+  border-radius: 99px;
+  background: var(--wine);
+  box-shadow: 0 0 0 7px var(--paper);
+  font: 900 1.5rem var(--font-display);
+  color: var(--paper);
+  opacity: 0;
+  transform: scale(.5);
+  transition: opacity .4s, transform .7s var(--bounce);
+}
+.tl-year.is-reached span { opacity: 1; transform: none; }
+.tl-year + .tl-item { margin-top: 0; }
+
+
+/* ---------- 7. TRAVELS ROUTE ---------- */
+/* The section is extra tall. The map inside "sticks" to the screen while you
+   scroll through it, and the scroll position decides how much route is drawn. */
+
+.travels {
+  padding: 0;
+  /* starts in the Timeline's blush, then back to cream */
+  background: var(--paper-texture), linear-gradient(var(--blush), var(--paper) 22rem);
+}
+.js .travels { height: var(--travel-height, 320vh); }
+
+.travels__sticky {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem);
+}
+.js .travels__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.travels .section__head { flex: none; margin-bottom: clamp(1rem, 2.5vw, 1.8rem); }
+.travels .section__title { font-size: clamp(2.4rem, 6vw, 4.6rem); margin-bottom: .5rem; }
+.travels .section__sub { font-size: 1.15rem; }
+
+/* The map paper: soft grid lines + warm vignette */
+.route {
+  position: relative;
+  flex: 1;
+  min-height: 340px;
+  border-radius: 14px;
+  background:
+    linear-gradient(rgba(110, 31, 51, .05) 1px, transparent 1px) 0 0 / 46px 46px,
+    linear-gradient(90deg, rgba(110, 31, 51, .05) 1px, transparent 1px) 0 0 / 46px 46px,
+    radial-gradient(ellipse at center, #faf2e8 40%, #f1e0cf 100%);
+  box-shadow: inset 0 0 0 1px rgba(110, 31, 51, .12), inset 0 0 70px rgba(196, 134, 47, .15);
+}
+
+.route__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* SVG pieces (created by script.js) */
+.route__doodle {
+  fill: none;
+  stroke: rgba(110, 31, 51, .2);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.route__doodle-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  fill: rgba(110, 31, 51, .35);
+}
+.route__ghost {
+  fill: none;
+  stroke: rgba(110, 31, 51, .1);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: .1 14;
+}
+.route__line {
+  fill: none;
+  stroke: var(--wine);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: .1 14;  /* tiny dashes + round ends = dots */
+}
+.route__start circle { fill: var(--gold); stroke: var(--wine); stroke-width: 3; }
+.route__start text {
+  font-family: var(--font-hand);
+  font-size: 22px;
+  fill: var(--ink-soft);
+}
+.route__plane { fill: var(--gold); stroke: var(--wine-deep); stroke-width: 1.6; stroke-linejoin: round; }
+
+/* Stop buttons sit on top of the SVG */
+.route__stops { position: absolute; inset: 0; pointer-events: none; }
+
+.stop {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform: translate(-50%, -1.6rem);  /* center the round pin on the route point */
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.stop.is-reached { pointer-events: auto; }
+
+.stop__pin {
+  position: relative;
+  width: 3.2rem;
+  height: 3.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--wine);
+  color: var(--gold);
+  font: 900 1.15rem var(--font-display);
+  box-shadow: 0 0 0 4px var(--paper), 0 0 0 6px var(--gold), 0 10px 20px rgba(74, 16, 34, .35);
+  opacity: 0;
+  transform: scale(2.6) rotate(-30deg);  /* starts big, then "stamps" down */
+  transition: opacity .25s ease, transform .45s cubic-bezier(.6, 0, .4, 1.4), background .3s, color .3s;
+}
+/* Pulsing ring around reached stops */
+.stop__pin::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  opacity: 0;
+}
+
+.stop__label {
+  margin-top: .7rem;
+  padding: .25rem .75rem .3rem;
+  background: var(--card);
+  box-shadow: 0 6px 14px -6px rgba(74, 16, 34, .35);
+  font: italic 700 1rem/1.15 var(--font-display);
+  color: var(--wine);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-8px) rotate(-2deg);
+  transition: opacity .4s ease .15s, transform .5s var(--bounce) .15s;
+}
+.stop__label small {
+  display: block;
+  font: 400 1.05rem var(--font-hand);
+  color: var(--ink-soft);
+}
+
+.stop.is-reached .stop__pin { opacity: 1; transform: none; }
+.stop.is-reached .stop__pin::after { animation: ring 2.4s ease-out .4s infinite; }
+.stop.is-reached .stop__label { opacity: 1; transform: rotate(-2deg); }
+.stop:hover .stop__pin,
+.stop:focus-visible .stop__pin,
+.stop.is-open .stop__pin { background: var(--gold); color: var(--wine-deep); transform: scale(1.12) rotate(-8deg); }
+
+@keyframes ring {
+  0%   { transform: scale(.85); opacity: .9; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* Photo card that pops up from a stop */
+.route-card {
+  position: absolute;
+  z-index: 5;
+  width: min(21rem, calc(100% - 1rem));
+  padding: 1rem 1rem 1.1rem;
+  border-radius: 4px;
+  background: var(--card) var(--grain);
+  box-shadow: 0 26px 50px -16px rgba(74, 16, 34, .5);
+  animation: card-in .45s var(--bounce);
+}
+.route-card[hidden] { display: none; }
+.route-card--sheet { left: .5rem; right: .5rem; bottom: .5rem; width: auto; }
+
+@keyframes card-in {
+  from { opacity: 0; transform: scale(.7) translateY(14px) rotate(-3deg); }
+}
+
+.route-card__head { display: flex; align-items: center; gap: .9rem; padding-right: 1.5rem; }
+.route-card__head .stamp { min-width: 2.7rem; font: 900 1rem var(--font-display); }
+.route-card__title { margin: 0; font: italic 700 1.35rem/1.1 var(--font-display); color: var(--wine); }
+.route-card__sub { margin: .15rem 0 0; font-family: var(--font-hand); font-size: 1.15rem; line-height: 1.2; color: var(--ink-soft); }
+.route-card__close {
+  position: absolute;
+  top: .35rem;
+  right: .4rem;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.route-card__close:hover { background: var(--rose-soft); color: var(--wine); }
+
+/* Photos fanned out and overlapping like a small stack */
+.route-card__photos {
+  display: flex;
+  justify-content: center;
+  padding: 1.1rem 1.4rem .2rem;
+}
+.route-card__photos .polaroid {
+  flex: 0 1 9.5rem;
+  margin: 0 -.45rem;
+  padding: .45rem .45rem 0;
+  cursor: zoom-in;
+}
+.route-card__photos .polaroid:only-child { flex-basis: 12rem; }
+.route-card__photos .polaroid:hover { z-index: 2; transform: rotate(0deg) translateY(-6px) scale(1.06); }
+.route-card__photos .polaroid { padding-bottom: 1rem; }
+.route-card__photos .polaroid__caption { display: none; }  /* the year's sentence is shown once, below */
+.route-card__text {
+  margin: .7rem 1.4rem 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--wine);
+}
+.route-card__photos .postmark { transform: scale(.68) rotate(-14deg); transform-origin: top right; }
+.route-card__more {
+  margin: .6rem 0 0;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  color: var(--gold-deep);
+}
+
+
+/* ---------- 8. GALLERY + FILTERS ---------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .7rem;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .5rem 1.2rem .55rem;
+  border: 2px solid var(--wine);
+  border-radius: 99px;
+  background: transparent;
+  color: var(--wine);
+  font: 700 1.05rem var(--font-display);
+  cursor: pointer;
+  transition: background .3s, color .3s, transform .35s var(--bounce), box-shadow .3s;
+}
+.filter:hover { transform: translateY(-2px) rotate(-1.5deg); box-shadow: 0 8px 16px -8px rgba(110, 31, 51, .45); }
+.filter.is-active { background: var(--wine); color: var(--paper); }
+.filter__count {
+  padding: .05rem .45rem;
+  border-radius: 99px;
+  background: var(--rose-soft);
+  font: 700 .72rem/1.5 var(--font-mono);
+  color: var(--wine);
+}
+.filter.is-active .filter__count { background: var(--gold); color: var(--wine-deep); }
+
+/* Masonry: script.js creates a few columns and deals the photos into them */
+.masonry {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1rem, 2.5vw, 2.2rem);
+  max-width: 76rem;
+  margin: 0 auto;
+  transition: opacity .35s ease;
+}
+.masonry.is-switching { opacity: 0; }
+.masonry__col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.6rem, 3.2vw, 2.6rem);
+}
+
+/* Photos fly into place: they start lower, shifted sideways and tilted (random values from script.js) */
+.gallery-item {
+  opacity: 0;
+  transform: translate(var(--fx, 0px), 160px) rotate(var(--fr, -10deg)) scale(.8);
+  transition: opacity .7s ease, transform 1.15s var(--smooth);
+  transition-delay: var(--delay, 0s);
+}
+.gallery-item.is-in { opacity: 1; transform: none; }
+.gallery-item .polaroid { cursor: zoom-in; }
+
+.gallery__empty {
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  color: var(--ink-soft);
+}
+
+/* 3D tilt on hover (script.js sets the rotation and moves the shine) */
+.polaroid.is-tilting {
+  transition: transform .12s linear, box-shadow .3s;
+  box-shadow: 0 34px 50px -20px rgba(58, 20, 30, .55);
+  z-index: 2;
+}
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .55), transparent 55%);
+  opacity: 0;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+.polaroid.is-tilting .glare { opacity: 1; }
+
+
+/* ---------- 9. FILM STRIP ---------- */
+
+.film {
+  overflow: hidden;
+  padding-left: 0;
+  padding-right: 0;
+}
+.film .section__head { padding: 0 1rem; margin-bottom: 1rem; }
+
+.film__strip {
+  position: relative;
+  margin: 2.5rem 0;
+  background: #1e1416;
+  box-shadow: 0 22px 40px -18px rgba(0, 0, 0, .6);
+  transform: rotate(-2.5deg);
+}
+.film__strip--two { margin-top: 3.5rem; transform: rotate(1.8deg); }
+
+/* script.js slides this track sideways while you scroll */
+.film__track {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  padding: 40px 14px;
+  will-change: transform;
+}
+
+/* Sprocket holes along the top and bottom edges */
+.film__track::before,
+.film__track::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: linear-gradient(90deg, rgba(246, 234, 217, .9) 0 13px, transparent 13px) 6px 0 / 30px 100% repeat-x;
+}
+.film__track::before { top: 10px; }
+.film__track::after  { bottom: 10px; }
+
+.film__frame {
+  position: relative;
+  flex: none;
+  width: clamp(170px, 22vw, 280px);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.film__img {
+  display: block;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #2c2022;
+}
+.film__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(.35) contrast(1.08) saturate(.85);  /* vintage film look */
+  transition: filter .5s, transform .7s var(--smooth);
+}
+.film__frame:hover .film__img img,
+.film__frame:focus-visible .film__img img { filter: none; transform: scale(1.07); }
+
+/* Orange frame numbers printed on the film edge */
+.film__num {
+  position: absolute;
+  left: 6px;
+  bottom: -17px;
+  font: 700 .62rem var(--font-mono);
+  letter-spacing: .14em;
+  color: #e89a4f;
+}
+
+
+/* ---------- 10. CLOSING + FOOTER ---------- */
+
+.closing {
+  overflow: hidden;
+  text-align: center;
+  color: var(--paper);
+  background:
+    var(--grain),
+    linear-gradient(transparent 70%, var(--wine-deep)),  /* melts into the footer */
+    radial-gradient(ellipse at 50% 25%, #8a2b45, var(--wine) 50%, var(--wine-deep));
+  padding-bottom: clamp(6rem, 12vw, 9rem);
+}
+
+/* Torn paper edge: the cream pages end in a rip, with the wine page underneath.
+   ::before is the rip's shadow and pale rim, ::after is the torn paper itself. */
+.closing::before,
+.closing::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  pointer-events: none;
+}
+.closing::before {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='40'%3E%3Cfilter id='b' filterUnits='userSpaceOnUse' x='-30' y='-10' width='660' height='60'%3E%3CfeGaussianBlur stdDeviation='2.2'/%3E%3C/filter%3E%3Cpath d='M-40 0 L-38.2 17 L-33 17.9 L-24 21.2 L-11.5 20.8 L-0.4 22.2 L0 21.9 L10 22.6 L22.2 21.8 L31.8 20.6 L43 22 L47.1 20.5 L56.9 19.7 L64 20.2 L76.7 22.4 L85.5 22.5 L90.7 21.9 L97.7 20.4 L103.1 21.9 L107.5 20.9 L115.6 20.4 L127.4 17.8 L136.9 19 L141.3 15.3 L152.6 13.3 L164.9 14.5 L176.9 10.8 L185 13.2 L197 14.5 L207.8 14.6 L216 17.1 L226.6 16.3 L231.3 15.4 L243.8 17.2 L248.3 18 L254.3 19.2 L263.1 16.3 L272.8 18.2 L283.8 19.2 L295.5 19 L299.7 19.3 L304.9 20.4 L311.2 19.7 L316.7 19.8 L325.2 23.3 L337 24 L343.6 25.7 L353.3 25.8 L362.9 24.1 L372.5 24.1 L381.4 20.7 L387.9 22.4 L392.3 18.7 L396.3 20.5 L400.3 20.1 L410.1 19 L418.1 18.1 L425.4 15.4 L430.9 18.2 L435.1 17.8 L443.6 16.7 L456.3 17.4 L461.2 17.9 L465.8 16.3 L474.6 17.9 L482.2 16.1 L489.5 15.4 L499.3 15.5 L504.1 13.6 L511.9 11.5 L521.9 13.1 L526.3 14.5 L532 14.6 L537 13.6 L543.8 15.8 L552.1 16.7 L561.8 17 L567 17.9 L576 21.2 L588.5 20.8 L599.6 22.2 L600 21.9 L610 22.6 L622.2 21.8 L631.8 20.6 L640 0 Z' fill='%232a0812' fill-opacity='.5' filter='url(%23b)'/%3E%3Cpath d='M-40 0 L-38.2 15.1 L-33 16 L-24 19.3 L-11.5 18.9 L-0.4 20.3 L0 20 L10 20.7 L22.2 19.9 L31.8 18.7 L43 20.1 L47.1 18.6 L56.9 17.8 L64 18.3 L76.7 20.5 L85.5 20.6 L90.7 20 L97.7 18.5 L103.1 20 L107.5 19 L115.6 18.5 L127.4 15.9 L136.9 17.1 L141.3 13.4 L152.6 11.4 L164.9 12.6 L176.9 8.9 L185 11.3 L197 12.6 L207.8 12.7 L216 15.2 L226.6 14.4 L231.3 13.5 L243.8 15.3 L248.3 16.1 L254.3 17.3 L263.1 14.4 L272.8 16.3 L283.8 17.3 L295.5 17.1 L299.7 17.4 L304.9 18.5 L311.2 17.8 L316.7 17.9 L325.2 21.4 L337 22.1 L343.6 23.8 L353.3 23.9 L362.9 22.2 L372.5 22.2 L381.4 18.8 L387.9 20.5 L392.3 16.8 L396.3 18.6 L400.3 18.2 L410.1 17.1 L418.1 16.2 L425.4 13.5 L430.9 16.3 L435.1 15.9 L443.6 14.8 L456.3 15.5 L461.2 16 L465.8 14.4 L474.6 16 L482.2 14.2 L489.5 13.5 L499.3 13.6 L504.1 11.7 L511.9 9.6 L521.9 11.2 L526.3 12.6 L532 12.7 L537 11.7 L543.8 13.9 L552.1 14.8 L561.8 15.1 L567 16 L576 19.3 L588.5 18.9 L599.6 20.3 L600 20 L610 20.7 L622.2 19.9 L631.8 18.7 L640 0 Z' fill='%23fffdf9'/%3E%3C/svg%3E") 0 0 / 600px 40px repeat-x;
+}
+.closing::after {
+  --tear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='40'%3E%3Cpath d='M-40 0 L-38.2 13.5 L-33 14.4 L-24 17.7 L-11.5 17.3 L-0.4 18.7 L0 18.4 L10 19.1 L22.2 18.3 L31.8 17.1 L43 18.5 L47.1 17 L56.9 16.2 L64 16.7 L76.7 18.9 L85.5 19 L90.7 18.4 L97.7 16.9 L103.1 18.4 L107.5 17.4 L115.6 16.9 L127.4 14.3 L136.9 15.5 L141.3 11.8 L152.6 9.8 L164.9 11 L176.9 7.3 L185 9.7 L197 11 L207.8 11.1 L216 13.6 L226.6 12.8 L231.3 11.9 L243.8 13.7 L248.3 14.5 L254.3 15.7 L263.1 12.8 L272.8 14.7 L283.8 15.7 L295.5 15.5 L299.7 15.8 L304.9 16.9 L311.2 16.2 L316.7 16.3 L325.2 19.8 L337 20.5 L343.6 22.2 L353.3 22.3 L362.9 20.6 L372.5 20.6 L381.4 17.2 L387.9 18.9 L392.3 15.2 L396.3 17 L400.3 16.6 L410.1 15.5 L418.1 14.6 L425.4 11.9 L430.9 14.7 L435.1 14.3 L443.6 13.2 L456.3 13.9 L461.2 14.4 L465.8 12.8 L474.6 14.4 L482.2 12.6 L489.5 11.9 L499.3 12 L504.1 10.1 L511.9 8 L521.9 9.6 L526.3 11 L532 11.1 L537 10.1 L543.8 12.3 L552.1 13.2 L561.8 13.5 L567 14.4 L576 17.7 L588.5 17.3 L599.6 18.7 L600 18.4 L610 19.1 L622.2 18.3 L631.8 17.1 L640 0 Z'/%3E%3C/svg%3E");
+  background: var(--paper-texture), var(--paper);
+  -webkit-mask: var(--tear) 0 0 / 600px 40px repeat-x;
+  mask: var(--tear) 0 0 / 600px 40px repeat-x;
+}
+.closing .eyebrow { color: var(--gold); }
+
+.closing__title {
+  max-width: 13ch;
+  margin: .8rem auto clamp(3rem, 7vw, 5rem);
+  font: 900 clamp(3rem, 10vw, 8.5rem)/.95 var(--font-display);
+  letter-spacing: -.02em;
+  color: var(--paper);
+}
+.closing__title .word:last-child { font-style: italic; color: var(--gold); }
+
+/* Words rise in one by one (script.js adds "is-in") */
+.js .closing__title .word { opacity: 0; transform: translateY(.7em) rotate(6deg); }
+.closing__title.is-in .word {
+  opacity: 1;
+  transform: none;
+  transition: opacity .6s ease, transform 1.1s var(--bounce);
+  transition-delay: calc(var(--i) * 130ms);
+}
+
+.closing__photo { width: min(80vw, 24rem); margin: 0 auto; }
+.closing__photo .polaroid__caption { font-size: 1.65rem; }
+.closing__note {
+  margin: 2.2rem 0 0;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  color: var(--rose-soft);
+}
+
+.footer {
+  padding: 2.5rem 1rem 3rem;
+  text-align: center;
+  background: var(--wine-deep);
+  color: var(--rose-soft);
+}
+.footer__names { margin: 0; font: italic 700 1.4rem var(--font-display); color: var(--paper); }
+.footer__small { margin: .3rem 0 0; font-size: 1.05rem; }
+.footer a { color: var(--gold); }
+
+
+/* ---------- 11. LIGHTBOX + HEARTS ---------- */
+
+/* <dialog> covers the whole screen. It starts invisible and fades in. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 1rem;
+  border: 0;
+  overflow: hidden;
+  background: rgba(38, 10, 20, .92);
+  color: var(--paper);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.lightbox[open] { display: grid; place-items: center; }
+.lightbox.is-open { opacity: 1; }
+.lightbox::backdrop { background: transparent; }
+
+.lightbox__frame {
+  position: relative;
+  max-width: min(92vw, 1100px);
+  margin: 0;
+  padding: clamp(.6rem, 1.5vw, 1rem) clamp(.6rem, 1.5vw, 1rem) 0;
+  border-radius: 3px;
+  background: var(--card);
+  box-shadow: 0 40px 90px -20px rgba(0, 0, 0, .75);
+  touch-action: pan-y;  /* we handle left/right swipes ourselves */
+}
+.lightbox__photo { position: relative; }
+.lightbox__photo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 12rem);
+  max-height: calc(100svh - 12rem);
+  margin: 0 auto;
+}
+.lightbox__caption {
+  padding: .7rem .5rem 1rem;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.15;
+  color: var(--ink);
+}
+.lightbox__caption small {
+  display: block;
+  margin-top: .2rem;
+  font-size: .68em;
+  color: var(--ink-soft);
+}
+
+.lightbox__btn {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(251, 246, 239, .14);
+  color: var(--paper);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .25s, color .25s, transform .3s var(--bounce);
+}
+.lightbox__btn:hover { background: var(--gold); color: var(--wine-deep); transform: scale(1.1); }
+.lightbox__close { top: 1rem; right: 1rem; font-size: 1.25rem; }
+.lightbox__prev { left: 1rem; top: calc(50% - 1.6rem); }
+.lightbox__next { right: 1rem; top: calc(50% - 1.6rem); }
+
+.lightbox__count {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1rem;
+  margin: 0;
+  text-align: center;
+  font: 700 .85rem var(--font-mono);
+  letter-spacing: .15em;
+  color: var(--rose-soft);
+}
+
+/* Little hearts that follow the mouse */
+.hearts {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  overflow: hidden;
+  pointer-events: none;
+}
+.heart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0;
+}
+
+
+/* ---------- 12. PHONES, TABLETS + REDUCED MOTION ---------- */
+
+/* Tablets and smaller */
+@media (max-width: 900px) {
+  .story__grid { grid-template-columns: 1fr; }
+  .story__photo { max-width: 19rem; }
+  .counter { margin-left: auto; margin-right: auto; }
+}
+
+/* Timeline switches to one column with the line on the left */
+@media (max-width: 760px) {
+  .timeline__line { left: 1.1rem; }
+
+  .tl-item,
+  .tl-item--right {
+    width: 100%;
+    margin-left: 0;
+    padding: 1.2rem 0 1.2rem 3.4rem;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .tl-item + .tl-item { margin-top: 0; }
+
+  .tl-item__dot,
+  .tl-item--right .tl-item__dot { left: calc(1.1rem - 12px); right: auto; }
+
+  .tl-item::before,
+  .tl-item--right::before { left: 1.1rem; right: auto; width: 2.3rem; transform-origin: left; }
+
+  .tl-year { justify-content: flex-start; }
+}
+
+/* Phones */
+@media (max-width: 640px) {
+  body { font-size: 1.1rem; }
+  .section { padding: 4.5rem 1rem; }
+  .section__sub { font-size: 1.15rem; }
+
+  .hero { padding: 5rem 1rem 7rem; }
+  .hero__name { font-size: 17vw; }
+  .hero__name--two { font-size: 14vw; }
+  .hero-photo { width: calc(var(--w, 180px) * .62); }
+  /* Fewer floating photos on small screens, and none behind the tagline */
+  .hero-photo:nth-child(3),
+  .hero-photo:nth-child(4),
+  .hero-photo:nth-child(n + 7) { display: none; }
+  .hero-photo .polaroid__caption { font-size: .95rem; line-height: 1.05; }
+
+  .tape { width: 4rem; height: 1.25rem; }
+  .counter__stamp { right: -.3rem; }
+
+  .travels .section__sub { font-size: 1rem; }
+  .stop { transform: translate(-50%, -1.3rem); }
+  .stop__pin { width: 2.6rem; height: 2.6rem; font-size: 1rem; }
+  .stop__label { font-size: .88rem; padding: .2rem .55rem; }
+  .stop__label small { font-size: .95rem; }
+
+  .filter { padding: .4rem .9rem; font-size: .95rem; }
+  .masonry .polaroid { padding: .45rem .45rem 0; }
+  .masonry .polaroid__caption { font-size: 1.15rem; padding: .45rem .2rem .6rem; }
+  .masonry .polaroid__date { font-size: .9rem; }
+  .masonry .postmark { transform: scale(.7) rotate(-14deg); transform-origin: top right; }
+
+  .film__frame { width: 150px; }
+
+  .lightbox__prev,
+  .lightbox__next { top: auto; bottom: .8rem; }
+  .lightbox__prev { left: .8rem; }
+  .lightbox__next { right: .8rem; }
+  .lightbox__count { bottom: 2rem; }
+  .lightbox__photo img { max-height: calc(100svh - 14rem); }
+}
+
+/* People who turned on "reduce motion" in their phone/computer settings:
+   no flying, flipping, floating or tilting. Things simply fade in. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js .page,
+  .js .page:nth-of-type(even),
+  .gallery-item,
+  .tl-card,
+  .stop__pin,
+  .stop__label,
+  .js .hero .char,
+  .js .hero__amp,
+  .js .hero__eyebrow,
+  .js .hero__tagline,
+  .js .hero__desc,
+  .js .scroll-cue,
+  .js .closing__title .word,
+  .intro.is-leaving .envelope { transform: none !important; }
+
+  .js .page { transition: opacity .6s ease; }
+}
+
+
+/* ---------- SMALL EXTRAS ---------- */
+
+/* Anything with the "hidden" attribute stays hidden, even if another rule sets display */
+[hidden] { display: none !important; }
+
+/* Message shown on the map when there are no Travels photos yet */
+.route__empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  color: var(--ink-soft);
+}
+
+.route__plane { transition: opacity .3s ease; }
