@@ -28,7 +28,8 @@
    - "Travels" photos with the exact same location text are grouped into one
      stop on the travel route. Travels with an empty location are grouped
      together as "Somewhere new" until you fill it in.
-   - Big phone photos are slow to load. Resize them to about 1600px wide first.
+   - Big phone photos make the page lag when scrolling. Resize them first so the
+     longest side is about 1600px.
    - The captions, dates and locations below are placeholders. Change them
      to match your real photos.
 */

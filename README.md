@@ -13,11 +13,15 @@ Plain HTML, CSS and JavaScript. No frameworks, no build step.
 | `photos.js` | **The list of photos.** This is the file you edit most |
 | `images/` | Put your photos here |
 | `images/backgrounds/` | The two background photos (behind the names, and in Our Story) |
+| `images/textures/` | The paper texture and the torn-paper edge |
 
 ## Add a photo
 
-1. Copy the photo into `images/`, for example `images/baguio-2019.jpg`.
-2. Open `photos.js` and add an entry (copy an existing one):
+1. Make the photo smaller first: about **1600px on its longest side** (most phone photos are
+   4000px). Full-size phone photos make the page lag when you scroll.
+   Free tools: squoosh.app in the browser, or "Resize" in the Windows Photos app.
+2. Copy the photo into `images/`, for example `images/baguio-2019.jpg`.
+3. Open `photos.js` and add an entry (copy an existing one):
 
    ```js
    {
@@ -29,7 +33,7 @@ Plain HTML, CSS and JavaScript. No frameworks, no build step.
    },
    ```
 
-3. Save and refresh the page.
+4. Save and refresh the page.
 
 The gallery, filters, timeline, travel route, film strip and closing photo all update automatically.
 
@@ -38,8 +42,10 @@ The gallery, filters, timeline, travel route, film strip and closing photo all u
 - `images/backgrounds/hero.webp`: the blurred photo behind our names
 - `images/backgrounds/story.webp`: the faded photo on the right of "Our Story"
 
-To use a different photo, replace the file and keep the same name. Or put a `.jpg` in that
-folder and change the file name in `style.css` (search for `backgrounds/`).
+Both are already blurred and tinted inside the file (blurring them in the browser made
+scrolling lag). To use a different photo, blur it first in a photo editor (a strong blur,
+like a soft dreamy memory), then replace the file and keep the same name. Or put a `.jpg`
+in that folder and change the file name in `style.css` (search for `backgrounds/`).
 Keep each one under 300 KB so the page loads fast on phones.
 
 ## Change the "days together" date

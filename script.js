@@ -703,10 +703,11 @@ function buildTimeline() {
   }
 }
 
-// Runs while scrolling: grows the line and pops in each entry the line reaches
-function updateTimeline() {
+// Runs while scrolling: grows the line and pops in each entry the line reaches.
+// track = where the timeline is on screen (measured by onScroll)
+let timelineProgress = "";
+function updateTimeline(track) {
   if (reduceMotion || !timelineMarks.length) return;
-  const track = $("#timeline-track").getBoundingClientRect();
   if (track.bottom < -100 || track.top > window.innerHeight + 100) return;  // not on screen
 
   // The tip of the line follows a point 65% of the way down the screen
@@ -715,7 +716,10 @@ function updateTimeline() {
   // Where each entry's dot is (read everything first, then change things)
   const dots = timelineMarks.map((mark) => mark.offsetTop + (mark.classList.contains("tl-year") ? 24 : 76));
 
-  timelineLine.style.setProperty("--progress", clamp(tip / track.height, 0, 1).toFixed(4));
+  const progress = clamp(tip / track.height, 0, 1).toFixed(4);
+  if (progress === timelineProgress) return;  // nothing moved, nothing to redraw
+  timelineProgress = progress;
+  timelineLine.style.setProperty("--progress", progress);
   timelineMarks.forEach((mark, i) => mark.classList.toggle("is-reached", tip >= dots[i]));
 }
 
@@ -962,11 +966,25 @@ function buildRoute() {
     btn.style.setProperty("--y", (points[i + 1].y / H) * 100 + "%");
   });
 
+  // 6) Points every few px along the route, for the paper plane. Measuring them here
+  //    once is much faster than asking the browser on every frame while scrolling.
+  const count = Math.max(1, Math.ceil(length / 4));
+  const samples = Array.from({ length: count + 1 }, (_, k) => line.getPointAtLength((length * k) / count));
+
   maskPath.setAttribute("stroke-dasharray", `${length} ${length + 40}`);
-  route = { width: W, height: H, points, line, maskPath, plane, length, stopLengths };
+  route = { width: W, height: H, points, line, maskPath, plane, length, stopLengths, samples, amount: -1 };
 
   if (reduceMotion) setRouteProgress(1);
-  else updateRoute();
+  else updateRoute(travels.getBoundingClientRect());
+}
+
+// The point at a distance along the route (in between two measured points, it's estimated)
+function pointOnRoute(distance) {
+  const at = (clamp(distance, 0, route.length) / route.length) * (route.samples.length - 1);
+  const i = Math.min(route.samples.length - 2, Math.floor(at));
+  const a = route.samples[i];
+  const b = route.samples[i + 1];
+  return { x: a.x + (b.x - a.x) * (at - i), y: a.y + (b.y - a.y) * (at - i) };
 }
 
 // Little hand-drawn details on the map: a compass, mountains, waves and a heart
@@ -1007,13 +1025,15 @@ function drawDoodles(W, H, tall) {
 
 // amount: 0 = nothing drawn, 1 = the whole route drawn
 function setRouteProgress(amount) {
+  if (amount === route.amount) return;  // nothing moved, nothing to redraw
+  route.amount = amount;
   const drawn = route.length * amount;
   route.maskPath.setAttribute("stroke-dashoffset", route.length - drawn);
 
   // The paper plane rides on the tip of the line, pointing where it's going
   if (amount > 0.002 && amount < 0.998) {
-    const p = route.line.getPointAtLength(drawn);
-    const ahead = route.line.getPointAtLength(Math.min(route.length, drawn + 3));
+    const p = pointOnRoute(drawn);
+    const ahead = pointOnRoute(drawn + 6);
     const angle = (Math.atan2(ahead.y - p.y, ahead.x - p.x) * 180) / Math.PI;
     route.plane.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${angle})`);
     route.plane.style.opacity = 1;
@@ -1030,9 +1050,9 @@ function setRouteProgress(amount) {
 }
 
 // Runs while scrolling: how far through the (extra tall) travel section are we?
-function updateRoute() {
+// box = where the travel section is on screen (measured by onScroll)
+function updateRoute(box) {
   if (!route || reduceMotion) return;
-  const box = travels.getBoundingClientRect();
   if (box.bottom < 0 || box.top > window.innerHeight) return;
   const lead = window.innerHeight * 0.3;  // start drawing a little before the map sticks
   const scrollable = box.height - window.innerHeight + lead;
@@ -1391,10 +1411,10 @@ function measureFilm() {
   filmExtra = filmTracks.map((track) => Math.max(0, track.scrollWidth - window.innerWidth));
 }
 
-// Runs while scrolling: slides the two strips sideways, in opposite directions
-function updateFilm() {
+// Runs while scrolling: slides the two strips sideways, in opposite directions.
+// box = where the film section is on screen (measured by onScroll)
+function updateFilm(box) {
   if (reduceMotion || !photos.length) return;
-  const box = $("#film").getBoundingClientRect();
   if (box.bottom < 0 || box.top > window.innerHeight) return;
 
   // 0 when the section appears at the bottom of the screen, 1 when it leaves at the top
@@ -1472,16 +1492,23 @@ function setupHeartTrail() {
 
 // ---------- 12. START EVERYTHING ----------
 
-// All the scroll animations run together, at most once per screen refresh
+// All the scroll animations run together, at most once per screen refresh.
+// Every position is measured first, and only then is anything changed: measuring
+// right after a change makes the browser redo the page layout, which made scrolling stutter.
+const timelineTrack = $("#timeline-track");
+const filmSection = $("#film");
 let frameQueued = false;
 function onScroll() {
   if (frameQueued) return;
   frameQueued = true;
   requestAnimationFrame(() => {
     frameQueued = false;
-    updateTimeline();
-    updateRoute();
-    updateFilm();
+    const timelineBox = timelineTrack.getBoundingClientRect();
+    const travelsBox = travels.getBoundingClientRect();
+    const filmBox = filmSection.getBoundingClientRect();
+    updateTimeline(timelineBox);
+    updateRoute(travelsBox);
+    updateFilm(filmBox);
   });
 }
 
