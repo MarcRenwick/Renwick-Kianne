@@ -3,7 +3,7 @@
    Sections in this file:
    1. Colors, fonts & basics     6. Timeline
    2. Shared pieces (polaroid,   7. Travels route
-      tape, postmark, stamp)     8. Gallery + filters
+      tape, stamp)               8. Gallery + filters
    3. Page-flip section reveal   9. Film strip
    4. Opening envelope          10. Closing + footer
    5. Hero + Our Story          11. Lightbox + hearts
@@ -183,47 +183,6 @@ a { color: var(--wine); }
 .tape--tl  { top: -.6rem; left: -1.5rem; transform: rotate(-38deg); }
 .tape--tr  { top: -.6rem; right: -1.5rem; transform: rotate(38deg); }
 .tape--top { top: -.85rem; left: 50%; transform: translateX(-50%) rotate(-3deg); }
-
-/* Postmark: the round ink stamp on travel photos */
-.postmark {
-  position: absolute;
-  z-index: 2;
-  top: .6rem;
-  right: .6rem;
-  width: 4.7rem;
-  height: 4.7rem;
-  border-radius: 50%;
-  border: 2px solid currentColor;
-  box-shadow: inset 0 0 0 3px transparent, inset 0 0 0 4px currentColor;  /* inner ring */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: .15rem;
-  text-align: center;
-  font: 700 .55rem/1.2 var(--font-mono);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: rgba(110, 31, 51, .8);
-  transform: rotate(-14deg);
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-.postmark b { max-width: 80%; font-weight: 700; overflow: hidden; }
-.postmark i { font-style: normal; font-size: .5rem; opacity: .85; }
-
-/* Wavy "cancellation" lines next to the postmark */
-.postmark::after {
-  content: "";
-  position: absolute;
-  right: 92%;
-  top: 50%;
-  width: 3.4rem;
-  height: 1.6rem;
-  transform: translateY(-50%);
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' fill='none' stroke='%236e1f33' stroke-width='2.2'%3E%3Cpath d='M0 5q7.5-5 15 0t15 0 15 0 15 0M0 15q7.5-5 15 0t15 0 15 0 15 0M0 25q7.5-5 15 0t15 0 15 0 15 0'/%3E%3C/svg%3E") center / contain no-repeat;
-  opacity: .75;
-}
 
 /* Postage stamp with perforated (bumpy) edges */
 .stamp {
@@ -558,8 +517,6 @@ a { color: var(--wine); }
   width: var(--w, 180px);
   animation: bob var(--dur, 7s) ease-in-out var(--delay, 0s) infinite alternate;
 }
-/* No place/date stamp on the photos at the top of the page */
-.hero .postmark { display: none; }
 
 .js .hero-photo { opacity: 0; transition: opacity .5s ease; }
 .js .hero-photo.is-shown { opacity: 1; }
@@ -896,8 +853,7 @@ a { color: var(--wine); }
 }
 .tl-photos .polaroid { padding: .4rem .4rem 1.1rem; cursor: zoom-in; }
 .tl-photos .polaroid:hover { z-index: 2; transform: rotate(0deg) scale(1.06); }
-.tl-photos .polaroid__caption,
-.tl-photos .postmark { display: none; }  /* the year's sentence is shown once, below */
+.tl-photos .polaroid__caption { display: none; }  /* the year's sentence is shown once, below */
 
 .tl-meta { margin-top: 1.1rem; line-height: 1.3; }
 .tl-text {
@@ -1198,7 +1154,6 @@ a { color: var(--wine); }
   font-size: 1.1rem;
   color: var(--wine);
 }
-.route-card__photos .postmark { transform: scale(.68) rotate(-14deg); transform-origin: top right; }
 .route-card__more {
   margin: .6rem 0 0;
   text-align: center;
@@ -1620,7 +1575,6 @@ a { color: var(--wine); }
   .masonry .polaroid { padding: .45rem .45rem 0; }
   .masonry .polaroid__caption { font-size: 1.15rem; padding: .45rem .2rem .6rem; }
   .masonry .polaroid__date { font-size: .9rem; }
-  .masonry .postmark { transform: scale(.7) rotate(-14deg); transform-origin: top right; }
 
   .film__frame { width: 150px; }
 

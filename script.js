@@ -65,9 +65,6 @@ function formatDate(text, options = { month: "long", day: "numeric", year: "nume
   return date ? date.toLocaleDateString("en-US", options) : "";
 }
 
-// "2019-12-28" -> "Dec 2019"
-const shortDate = (text) => formatDate(text, { month: "short", year: "numeric" });
-
 // Run a function only after resizing has stopped for a moment
 function debounce(fn, ms) {
   let timer;
@@ -132,7 +129,7 @@ function tryDevelop(box) {
   }
 }
 
-// The photo area: <div class="photo"><img> (+ a postmark on travel photos)</div>
+// The photo area: <div class="photo"><img></div>
 function makePhoto(photo, lazy = true) {
   const box = el("div", "photo");
   box.dataset.src = photo.src;  // shown on screen if the file can't be found
@@ -154,16 +151,8 @@ function makePhoto(photo, lazy = true) {
   img.src = photo.src;  // set the src last, after the listeners are ready
   box.append(img);
 
-  if (photo.category === "Travels") box.append(makePostmark(photo));
   developObserver.observe(box);
   return box;
-}
-
-// Round ink stamp with the place and month, e.g. "BAGUIO CITY / DEC 2019"
-function makePostmark(photo, mark = el("span", "postmark")) {
-  const place = (photo.location || "Somewhere").split(",")[0];
-  mark.replaceChildren(el("b", "", place), el("i", "", shortDate(photo.date)));
-  return mark;
 }
 
 const TAPE_COLORS = ["rose", "gold", "wine", "cream"];
@@ -1229,10 +1218,6 @@ function showLightboxPhoto() {
   $("#lightbox-caption").textContent = photo.caption || "";
   $("#lightbox-meta").textContent = [formatDate(photo.date), photo.location].filter(Boolean).join(" · ");
   $("#lightbox-count").textContent = lbList.length > 1 ? `${lbIndex + 1} / ${lbList.length}` : "";
-
-  const postmark = $("#lightbox-postmark");
-  postmark.hidden = photo.category !== "Travels";
-  if (!postmark.hidden) makePostmark(photo, postmark);
 
   // No arrows when there is only one photo
   lightbox.querySelectorAll(".lightbox__prev, .lightbox__next").forEach((btn) => {
